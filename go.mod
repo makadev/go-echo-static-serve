@@ -4,7 +4,7 @@ go 1.23.2
 
 require (
 	github.com/labstack/echo/v4 v4.13.3
-	golang.org/x/sync v0.10.0
+	golang.org/x/sync v0.11.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
