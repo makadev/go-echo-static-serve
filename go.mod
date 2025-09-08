@@ -1,12 +1,12 @@
 module example/go-echo-stuff/webserver
 
-go 1.23.2
+go 1.24.0
 
 toolchain go1.24.1
 
 require (
 	github.com/labstack/echo/v4 v4.13.4
-	golang.org/x/sync v0.16.0
+	golang.org/x/sync v0.17.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
