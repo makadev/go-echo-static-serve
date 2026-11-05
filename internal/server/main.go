@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"example/go-echo-stuff/webserver/internal/config"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -33,7 +34,10 @@ func (srv *Server) Setup() {
 		srv.echo.IPExtractor = echo.ExtractIPFromXFFHeader(srv.config.Server.GetTrustedProxyOptions()...)
 	case "real-ip":
 		srv.echo.IPExtractor = echo.ExtractIPFromRealIPHeader(srv.config.Server.GetTrustedProxyOptions()...)
+	case "direct", "":
+		srv.echo.IPExtractor = echo.ExtractIPDirect()
 	default:
+		log.Printf("Unknown proxy-mode %q, falling back to \"direct\"", srv.config.Server.ProxyMode)
 		srv.echo.IPExtractor = echo.ExtractIPDirect()
 	}
 
