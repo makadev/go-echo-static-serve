@@ -1,6 +1,7 @@
 package config
 
 import (
+	"log"
 	"net"
 
 	"github.com/labstack/echo/v4"
@@ -31,9 +32,12 @@ func (s *ServerConfig) GetTrustedProxyOptions() []echo.TrustOption {
 		srvOptions := s
 		trustOptions := make([]echo.TrustOption, 0, len(srvOptions.TrustedProxyCIDR))
 		for _, cidr := range srvOptions.TrustedProxyCIDR {
-			if _, parsedCIDR, err := net.ParseCIDR(cidr); err == nil {
-				trustOptions = append(trustOptions, echo.TrustIPRange(parsedCIDR))
+			_, parsedCIDR, err := net.ParseCIDR(cidr)
+			if err != nil {
+				// fail early, a silently ignored range would make the proxy untrusted
+				log.Fatalf("Invalid trusted-proxy-cidr %q: %v", cidr, err)
 			}
+			trustOptions = append(trustOptions, echo.TrustIPRange(parsedCIDR))
 		}
 		trustOptions = append(trustOptions, echo.TrustLoopback(srvOptions.TrustedProxyLoopback))
 		trustOptions = append(trustOptions, echo.TrustLinkLocal(srvOptions.TrustedProxyLocallink))
