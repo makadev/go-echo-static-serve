@@ -3,7 +3,7 @@ module example/go-echo-stuff/webserver
 go 1.26.0
 
 require (
-	github.com/labstack/echo/v4 v4.16.4
+	github.com/labstack/echo/v4 v4.16.6
 	golang.org/x/sync v0.25.0
 	gopkg.in/yaml.v3 v3.0.1
 )
